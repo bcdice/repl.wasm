@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "parcel ./src/index.html",
-    "build": "parcel build ./src/index.html"
+    "build": "parcel build ./src/index.html --public-url https://repl-wasm.bcdice.org"
   },
   "dependencies": {
     "@wasmer/wasi": "^0.12.0",
