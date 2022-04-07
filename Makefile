@@ -10,7 +10,7 @@ $(RUBY_ROOT):
 	mv $(RUBY_ROOT)/usr/local/bin/ruby $(RUBY_ROOT)/ruby.wasm
 
 racc:
-	cd bcdice && rake racc
+	cd bcdice && bundle exec rake racc
 
 static/repl.wasm: $(RUBY_ROOT) racc
 	rm -rf $(RUBY_ROOT)/usr/local/include
