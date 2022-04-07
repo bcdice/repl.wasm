@@ -12,3 +12,7 @@ $ make
 $ npm install
 $ npm start
 ```
+
+## Known issues
+- i18n is not working. `I18n.t` returns nil every time.
+- Dynamic loading of some game systems fails. e.g.) `FutariSouda`, `Nechronica:Korean`
