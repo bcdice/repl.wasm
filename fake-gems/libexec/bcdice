@@ -1,0 +1,12 @@
+require "i18n"
+require "bcdice"
+require "bcdice/repl"
+
+STDOUT.sync = true
+
+puts RUBY_DESCRIPTION
+puts "BCDice #{BCDice::VERSION}"
+puts ""
+
+repl = BCDice::REPL.new()
+repl.run()
