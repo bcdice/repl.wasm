@@ -16,4 +16,4 @@ bundle install
 cd "$REPO_ROOT"
 
 make static/repl.wasm
-npx parcel build ./src/index.html
+npm run build
