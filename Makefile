@@ -1,5 +1,5 @@
 RUBY_CHANNEL = head-wasm32-unknown-wasi-full
-RUBY_SNAPSHOT = 2022-04-06-a
+RUBY_SNAPSHOT = ruby-head-wasm-wasi-0.3.0
 RUBY_ROOT = rubies/$(RUBY_CHANNEL)
 
 all: static/repl.wasm
@@ -12,7 +12,11 @@ $(RUBY_ROOT):
 racc:
 	cd bcdice && bundle exec rake racc
 
-static/repl.wasm: $(RUBY_ROOT) racc
+i18n/i18n.json:
+	mkdir -p i18n
+	ruby script/build_i18n.rb
+
+static/repl.wasm: $(RUBY_ROOT) racc i18n/i18n.json
 	rm -rf $(RUBY_ROOT)/usr/local/include
 	rm -f $(RUBY_ROOT)/usr/local/lib/libruby-static.a
-	wasi-vfs pack $(RUBY_ROOT)/ruby.wasm --mapdir /usr::$(RUBY_ROOT)/usr --mapdir /gems::./fake-gems --mapdir /bcdice::./bcdice/lib --mapdir /i18n::./bcdice/i18n -o static/repl.wasm
+	wasi-vfs pack $(RUBY_ROOT)/ruby.wasm --mapdir /usr::$(RUBY_ROOT)/usr --mapdir /gems::./fake-gems --mapdir /usr/local/lib/ruby/site_ruby::./bcdice/lib -o static/repl.wasm

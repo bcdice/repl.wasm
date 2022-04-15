@@ -2,6 +2,7 @@
 /static/repl.wasm
 /rubies
 /.parcel-cache
+/fake-gems/i18n.json
 
 # Logs
 logs

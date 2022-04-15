@@ -8,5 +8,35 @@ puts RUBY_DESCRIPTION
 puts "BCDice #{BCDice::VERSION}"
 puts ""
 
+class BCDice::REPL
+  command "help" do
+    puts <<~HELP
+      BCDice REPL commands:
+        use GAME_SYSTEM      # 使うゲームシステムを指定する
+        set GAME_SYSTEM      # 同上
+        list                 # ゲームシステムの一覧を表示する
+        debug [on, off]      # Debugモードの切替
+        debug [true, false]  # 同上
+        history              # コマンド履歴を表示
+        help                 # このメッセージを表示する
+        commands             # ゲームシステムのヘルプを表示する
+        exit, quit, q        # REPLを終了する
+    HELP
+  end
+
+  command "commands" do
+    puts "------------------------------"
+    puts @game_system::NAME
+    puts
+    puts @game_system::HELP_MESSAGE
+    puts "------------------------------"
+  end
+
+  command "list" do
+    games = BCDice.all_game_systems
+    puts games.map{|g| g::ID }.sort
+  end
+end
+
 repl = BCDice::REPL.new()
 repl.run()

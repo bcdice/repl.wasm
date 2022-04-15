@@ -2,7 +2,7 @@
 # Copyright (c) 2019, ukatama All rights reserved.
 # https://github.com/bcdice/bcdice-js
 
-require 'yaml'
+require "json"
 
 # Simple emulator
 module I18n
@@ -24,12 +24,23 @@ module I18n
     def load_translations
       return unless @@table.nil?
 
-      table = {}
-      @@load_path.flatten.each do |path|
-        deep_merge!(table, YAML.load_file(path))
+      source = File.read("/gems/i18n.json")
+      table = JSON.parse(source)
+      @@table = trans(table)
+    end
+
+    def trans(hash)
+      return hash unless hash.is_a?(Hash)
+
+      hash = hash.transform_keys do |k|
+        Integer(k, 10, exception: false) || k.to_sym
       end
 
-      @@table = table
+      hash = hash.transform_values do |v|
+        trans(v)
+      end
+
+      return hash
     end
 
     def translate(key, locale: nil, **options)
@@ -49,24 +60,6 @@ module I18n
       result || options[:default]
     end
     alias t translate
-
-    private
-
-    def deep_merge(hash, other_hash, &block)
-      deep_merge!(hash.dup, other_hash, &block)
-    end
-
-    def deep_merge!(hash, other_hash, &block)
-      hash.merge!(other_hash) do |key, this_val, other_val|
-        if this_val.is_a?(Hash) && other_val.is_a?(Hash)
-          deep_merge(this_val, other_val, &block)
-        elsif block_given?
-          yield key, this_val, other_val
-        else
-          other_val
-        end
-      end
-    end
   end
 
   module Locale

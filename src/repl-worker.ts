@@ -44,7 +44,7 @@ Comlink.expose({
         };
 
         const args = [
-            "repl.wasm", "-I/gems/lib", "-I/bcdice", "/gems/libexec/bcdice"
+            "repl.wasm", "-I/gems/lib", "/gems/libexec/bcdice"
         ];
 
         termWriter("$ # BCDice repl.wasm\r\n");
