@@ -29,6 +29,11 @@ interface IrbWorker {
 }
 
 async function init() {
+    navigator.serviceWorker.register(
+        new URL('service-worker.ts', import.meta.url),
+        {type: 'module'}
+    );
+
     checkAvailability()
     const irbWorker: Comlink.Remote<IrbWorker> = Comlink.wrap(
         // @ts-ignore

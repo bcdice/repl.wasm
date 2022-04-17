@@ -1,0 +1,14 @@
+{
+  "name": "BCDice REPL",
+  "short_name": "BCDice",
+  "description": "BCDice REPL on browser powered by ruby.wasm",
+  "icons": [
+    {
+      "src": "../static/images/bcdice.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone"
+}
